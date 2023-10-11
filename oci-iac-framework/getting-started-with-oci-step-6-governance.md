@@ -21,11 +21,31 @@ mrm: WWMK211125P00022
 xredirect: https://developer.oracle.com/tutorials/oci-iac-framework/getting-started-with-oci-step-6-governance/
 slug: getting-started-with-oci-step-6-governance
 ---
-{% imgx aligncenter assets/landing-zone.png 400 400 "OCLOUD landing zone" %}
+
+# Introduction to Governance as part of the OCLOUD framework
+
+<!-- {% imgx aligncenter assets/landing-zone.png 400 400 "OCLOUD landing zone" %} -->
+![OCLOUD landing zone](assets/landing-zone.png)
+
+* [Compartments](#compartments)
+* [Cloud Costs](#cloud-costs)
+* [Manage Cloud cost effectively (out of the box)](#manage-cloud-cost-effectively-out-of-the-box)
+  * [Predictability and Control](#predictability-and-control)
+  * [Visibility](#visibility)
+    * [Deutsche Standardkontenrahmen](#deutsche-standardkontenrahmen)
+  * [Unified Billing](#unified-billing)
+  * [Invoices](#invoices)
+  * [Payment Methods](#payment-methods)
+* [Manage Cloud cost effectively (more advanced)](#manage-cloud-cost-effectively-more-advanced)
+  * [Optimization](#optimization)
+  * [Extensibility](#extensibility)
+  * [Modern Cloud Economics](#modern-cloud-economics)
+
+---
 
 ## Compartments
 
-Something important to think about as you begin is how you will organize your tenants. Oracle Cloud Infrastructure offers a key feature in building up a virtual PC with a tenancy, and has introduced compartments to have a proper organizational structure so you can organize your infrastructure and use policies per compartments for a proper role and permission concept.  
+Something important to think about as you begin is how you will organize your tenants. Oracle Cloud Infrastructure offers a key feature in building up a virtual PC with a tenancy, and has introduced compartments to have a proper organizational structure so you can organize your infrastructure and use policies per compartments for a proper role and permission concept.
 
 When you first start working with Oracle Cloud Infrastructure, you need to think carefully about how you want to use compartments to organize and isolate your cloud resources. Compartments are fundamental to that process. Most resources can be moved between compartments. However, it's important to think through the compartment design for your organization up front, before implementing anything.
 
@@ -35,28 +55,29 @@ After creating a compartment, you need to write at least one policy for it, othe
 
 When you create an access policy, you need to specify which compartment to attach it to. This controls who can later modify or delete the policy. Depending on how you've designed your compartment hierarchy, you might attach it to the tenancy, a parent, or to the specific compartment itself.
 
-To place a new resource in a compartment, you simply specify that compartment when creating the resource (the compartment is one of the required pieces of information to create a resource). Keep in mind that most IAM resources reside in the tenancy (this includes users, groups, compartments, and any policies attached to the tenancy) and can't be created in or managed from a specific compartment.  
+To place a new resource in a compartment, you simply specify that compartment when creating the resource (the compartment is one of the required pieces of information to create a resource). Keep in mind that most IAM resources reside in the tenancy (this includes users, groups, compartments, and any policies attached to the tenancy) and can't be created in or managed from a specific compartment.
 
-The structure of compartment varies in most cases by the organizational structure of the company. Well-established and large companies have, in many cases, centralized services like a security or a network compartment. Smaller and newer companies could have a leaner and less complex setup and are organized by projects without central entities which are responsible for certain elements in the infrastructure.  
+The structure of compartment varies in most cases by the organizational structure of the company. Well-established and large companies have, in many cases, centralized services like a security or a network compartment. Smaller and newer companies could have a leaner and less complex setup and are organized by projects without central entities which are responsible for certain elements in the infrastructure.
 
-The flexibility and the features by OCI in using compartments to organize and isolate cloud resources gives you the ability to build up your organization, or a desired new setup of your tenancy to fulfill your requirement in the organization of your elements. 
+The flexibility and the features by OCI in using compartments to organize and isolate cloud resources gives you the ability to build up your organization, or a desired new setup of your tenancy to fulfill your requirement in the organization of your elements.
 
 We are supporting both centralized and federated application DevOps models. Most common models are dedicated DevOps teams aligned with a single workload. In the case of smaller workloads or COTS or 3rd party application, a single AppDevOps team is responsible for workload operation. Independent of this model every DevOps team manages several workload staging environments (DEV, UAT, PROD) deployed to individual landing zones/subscriptions. Each landing zone has a set of RBAC permissions managed with OCI IAM provided by the Platform SecOps team.
 
 When the base is handed over to the DevOps team, the team is end-to-end responsible for the workload. They can independently operate within the security guardrails provided by the platform team. If dependency on central teams or functions are discovered, it is highly recommended to review the process and eliminated as soon as possible to unblock DevOps teams.
 
-A project-based setup: 
+project-based setup:
 
-{% imgx assets/OCI-central-mgmt-per_project.png 1200 601 "project-based setup" %}
+<!-- {% imgx assets/OCI-central-mgmt-per_project.png "project-based setup" %} -->
+![project-based setup](assets/OCI-central-mgmt-per_project.png)
 
-A department-based setup:
+department-based setup:
 
-{% imgx assets/OCI-central-mgmt-functional_compartments.png 1200 575 "department-based setup" %}
+<!-- {% imgx assets/OCI-central-mgmt-functional_compartments.png "department-based setup" %} -->
+![department-based setup](assets/OCI-central-mgmt-functional_compartments.png)
 
 Both setups are just examples and will require a discovery workshop with the customer to build the compartment structure based on his requirements.
 
 The landing zone, as part of the base setup in step 2, is intended to provide an initial setup as blueprint for a classical 3-tier web-application where each layer is logically separated for each department with centralized management of IAM, network, and security.
-
 
 ## Cloud Costs
 
@@ -66,18 +87,19 @@ This document gives you some guidance how to manage Cloud cost effectively. You 
 
 See Jenet (Cloud cost controller) in our 4 minutes [Introduction to Oracle Cloud Infrastructure Cost Management video][cost_video1] to get an initial idea of effective cloud cost management.
 
+<!-- {% imgx assets/jenet.jpg "Jenet is doing Cost Management" %} -->
+![Jenet is doing Cost Management](assets/jenet.jpg)
 
-{% imgx assets/jenet.jpg 1200 615 "Jenet is doing Cost Management" %}
+In our example Jenet ist responsible for Cost Management. This consists of:
 
-In our example Jenet is responsible for Cost Management. This consists of:
+* Manage Cloud Budgets
+* Stay on top of cloud spend
+* Analyze usage for cost optimization
 
-- Manage Cloud Budgets
-- Stay on top of cloud spend
-- Analyze usage for cost optimization
+To do so Oracle provides Jenet Enterprise-grade Controls for Cost Management.
 
-To do so, Oracle provides Jenet Enterprise-grade Controls for Cost Management.
-
-{% imgx assets/enterprise_grade_controls.jpg "Enterprise-grade Controls for Cost Management" %}
+<!-- {% imgx assets/enterprise.grade.controls.jpg "Enterprise-grade Controls for Cost Management" %} -->
+![Enterprise-grade Controls for Cost Management](assets/enterprise.grade.controls.jpg)
 
 OCI provides you a comprehensive set of tools out of the box to manage Cloud cost effectively.
 
@@ -87,13 +109,17 @@ OCI provides you a comprehensive set of tools out of the box to manage Cloud cos
 
 ### Predictability and Control
 
-{% imgx assets/predictability.jpg 45% "Predictability" %}
-{% imgx assets/predictability_1.jpg 45% "Allocate Budgets" %}
+<!-- {% imgx assets/predictability.jpg 45% "Predictability" %} -->
+![Predictability](assets/predictability.jpg)
+<!-- {% imgx assets/predictability.1.jpg 45% "Allocate Budgets" %} -->
+![Allocate Budgets](assets/predictability.1.jpg)
 
 Budgets are set on cost-tracking tags or on compartments (including the root compartment) to track all spending in that cost-tracking tag or for that compartment and its children. Budgets can be used to set thresholds for your Oracle Cloud Infrastructure spending. You can set alerts on your budget to let you know when you might exceed your budget, and you can view all of your budgets and spending from one single place in the Oracle Cloud Infrastructure console.
 
-{% imgx assets/control.jpg 45% "Control" %}
-{% imgx assets/control_1.jpg 45% "Set Tresholds" %}
+<!-- {% imgx assets/control.jpg 45% "Control" %} -->
+![Control](assets/control.jpg)
+<!-- {% imgx assets/control.1.jpg 45% "Set Treshholds" %} -->
+![Set Treshholds](assets/control.1.jpg)
 
 See [Budgets Overview][cost_doku_budgets] for more information.
 
@@ -101,36 +127,38 @@ Budgets help you track your Oracle Cloud Infrastructure (OCI) spending. They mon
 
 You can also use the integration with Events service to trigger functions that create quotas resulting in budgets with hard limits.
 
-{% imgx assets/3steps.png "You can create and enforced budget in three easy steps" %}
+<!-- {% imgx assets/3steps.png ""You can create and enforced budget in three easy steps" %} -->
+![You can create and enforced budget in three easy steps](assets/3steps.png)
 
-- Create a budget and alert
-- Create a function
-- Create a rule
+* Create a budget and alert
+* Create a function
+* Create a rule
 
 As a result, you can prevent the creation of new Compute resources in your tenancy. Anyone who tries to create resources after crossing the budget is unable to do so and sees a message notifying them that the compartment quota was exceeded.
 
 Source: [Enforced budgets on OCI using functions and quotas][cost_3steps1]
 
-
 ### Visibility
 
 [Cost Analysis Dashboard][cost_doku_analysis] provides easy-to-use visualization to help you track and optimize your Oracle Cloud Infrastructure spending by
-- Service (shown by default when the Cost Analysis page first opens)
-- Service and Description
-- Service and SKU (Part Number)
-- Service and Tag (see [Oracle Cloud Infrastructure Tagging][cost_tagging] for more details)
-- Compartment (see [Oracle Cloud Infrastructure Compartments][cost_compartments] for more details)
-- Monthly Costs
+
+* Service (shown by default when the Cost Analysis page first opens)
+* Service and Description
+* Service and SKU (Part Number)
+* Service and Tag (see [Oracle Cloud Infrastructure Tagging][cost_tagging] for more details)
+* Compartment (see [Oracle Cloud Infrastructure Compartments][cost_compartments] for more details)
+* Monthly Costs
 
 To use Cost Analysis, the following policy statement is required:
 
-```
+```bash
 Allow group <group_name> to read usage-report in tenancy
 ```
 
-{% imgx assets/visibility.jpg 45% "Visibility" %}
-{% imgx assets/visibility_1.jpg 45% "Export Usage Report" %}
-
+<!-- {% imgx assets/visibility.jpg 45% "Visibility" %} -->
+![Visibility](assets/visibility.jpg)
+<!-- {% imgx assets/visibility.1.jpg 45% "Export Usage Report" %} -->
+![Export Usage Report](assets/visibility.1.jpg)
 
 A cost report is a comma-separated value (CSV) file that is similar to a usage report, but also includes cost columns. The report can be used to obtain a breakdown of your invoice line items at resource-level granularity. As a result, you can optimize your Oracle Cloud Infrastructure spending, and make more informed cloud spending decisions.
 
@@ -138,7 +166,7 @@ A usage report is a comma-separated value (CSV) file that can be used to get a d
 
 To use cost and usage reports, the following policy statement is required:
 
-```
+```bash
 define tenancy usage-report as ocid1.tenancy.oc1..aaaaaaaaned4fkpkisbwjlr56u7cj63lf3wffbilvqknstgtvzub7vhqkggq
 endorse group <group> to read objects in tenancy usage-report
 ```
@@ -149,21 +177,20 @@ For more information, see [Cost and Usage Reports Overview][cost_doku_usage_repo
 
 Ein Kontenrahmen ist ein Verzeichnis, das alle Kostenarten systematisch numerischen Konten für die Buchführung in einem Wirtschaftszweig zuordnet. Er dient als Richtlinie und Empfehlung für die Aufstellung eines konkreten Kontenplans in einem Unternehmen. Damit sollen einheitliche Buchungen von gleichen Geschäftsvorfällen erreicht und zwischenbetriebliche Vergleiche ermöglicht werden. (Quelle: [Wikipedia][cost_kontenrahmen])
 
-- SKR 03 (für publizitätspflichtige Firmen – Prozessgliederungsprinzip)
-- SKR 04 (für publizitätspflichtige Firmen – Abschlussgliederungsprinzip, Kontenrahmen nach dem Bilanzrichtliniengesetz (BiRiliG) unter Berücksichtigung der Neuerungen des Bilanzrechtsmodernisierungsgesetz(BilMoG))
-
+* SKR 03 (für publizitätspflichtige Firmen – Prozessgliederungsprinzip)
+* SKR 04 (für publizitätspflichtige Firmen – Abschlussgliederungsprinzip, Kontenrahmen nach dem Bilanzrichtliniengesetz (BiRiliG) unter Berücksichtigung der Neuerungen des Bilanzrechtsmodernisierungsgesetz(BilMoG))
 
 Wir stellen hier für Sie eine Abbildung der Standardkontenrahmen SKR 03, SKR 04 als ["Defined Tags"][cost_kontenrahmen_definedtag] zur Verfügung. Diese Tags können Sie mit dem [**Cost Analysis Dashboard**][cost_doku_analysis] auswerten.
 
 Um die dafür notwendigen Namespaces zu **verwalten** benötigen Sie folgende Berechtigungen
 
-```
+```bash
 Allow group GroupA to use tag-namespaces in tenancy
 ```
 
 Um die dafür notwendigen Namespaces **auszuwerten** benötigen Sie folgende Berechtigungen
 
-```
+```bash
 Allow group GroupA to read tag-namespaces in tenancy
 ```
 
@@ -173,29 +200,28 @@ z.B. [DATEV-Kontenrahmen nach dem Bilanzrichtlinie-Umsetzungsgesetz Standardkont
 
 Die hier beispielhaft implementierten Konten stammen aus der Quelle [Software, Anschaffung und Abschreibung][cost_kontenrahmen_skr03example1].
 
-
 Mapping Standardkontenrahmen zu Namespaces
 
-| Namespace | Key  | Value                                                                                                 | Resources                          |
-| --------- | ---- | ----------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| SKR03     | 0    | Anlage- und Kapitalkonten                                                                             |                                    |
+| Namespace | Key  | Value                                                                                                 | Resources                                                                                                                               |
+| --------- | ---- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| SKR03     | 0    | Anlage- und Kapitalkonten                                                                             |                                                                                                                                         |
 | SKR03     | 0027 | EDV-Software                                                                                          | Entgeltlich erworbene Konzessionen, gewerbliche Schutzrechte und ähnliche Rechte und Werte sowie Lizenzen an solchen Rechten und Werten |
-| SKR03     | 0044 | EDV-Software                                                                                          | Selbst geschaffene immaterielle Vermögensgegenstände |
-| SKR03     | 1    | Finanz- und Privatkonten                                                                              |                                    |
-| SKR03     | 2    | Abgrenzungskonten                                                                                     |                                    |
-| SKR03     | 3    | Wareneingangs- und Bestandkonten                                                                      |                                    |
-| SKR03     | 4    | Betriebliche Aufwendungen                                                                             |                                    |
-| SKR03     | 4806 | Wartungskosten für Hard- und Software                                                                 | Sonstige betriebliche Aufwendungen |
-| SKR03     | 4822 | Abschreibungen auf immaterielle Vermögensgegenstände                                                  | Abschreibungen auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen |
-| SKR03     | 4964 | Aufwendungen für die zeitlich befristete Überlassung von Rechten (Lizenzen, Konzessionen)             | Sonstige betriebliche Aufwendungen |
-| SKR03     | 7    | Bestände an Erzeugnissen                                                                              |                                    |
-| SKR03     | 8    | Erlöskonten                                                                                           |                                    |
-| SKR03     | 8995 | Aktivierte Eigenleistungen zur Erstellung von selbst geschaffenen immateriellen Vermögensgegenständen | Andere aktivierte Eigenleistungen  |
-| SKR03     | 9    | Vortrags- und statistische Konten                                                                     |                                    |
+| SKR03     | 0044 | EDV-Software                                                                                          | Selbst geschaffene immaterielle Vermögensgegenstände                                                                                    |
+| SKR03     | 1    | Finanz- und Privatkonten                                                                              |                                                                                                                                         |
+| SKR03     | 2    | Abgrenzungskonten                                                                                     |                                                                                                                                         |
+| SKR03     | 3    | Wareneingangs- und Bestandkonten                                                                      |                                                                                                                                         |
+| SKR03     | 4    | Betriebliche Aufwendungen                                                                             |                                                                                                                                         |
+| SKR03     | 4806 | Wartungskosten für Hard- und Software                                                                 | Sonstige betriebliche Aufwendungen                                                                                                      |
+| SKR03     | 4822 | Abschreibungen auf immaterielle Vermögensgegenstände                                                  | Abschreibungen auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen                                                |
+| SKR03     | 4964 | Aufwendungen für die zeitlich befristete Überlassung von Rechten (Lizenzen, Konzessionen)             | Sonstige betriebliche Aufwendungen                                                                                                      |
+| SKR03     | 7    | Bestände an Erzeugnissen                                                                              |                                                                                                                                         |
+| SKR03     | 8    | Erlöskonten                                                                                           |                                                                                                                                         |
+| SKR03     | 8995 | Aktivierte Eigenleistungen zur Erstellung von selbst geschaffenen immateriellen Vermögensgegenständen | Andere aktivierte Eigenleistungen                                                                                                       |
+| SKR03     | 9    | Vortrags- und statistische Konten                                                                     |                                                                                                                                         |
 
 Implementierungsbeispiel:
 
-```
+```bash
 resource "oci_identity_tag_namespace" "skr03_tag_namespace" {
 # Required
 #------------------------------------------------------------
@@ -231,28 +257,28 @@ Die hier beispielhaft implementierten Konten stammen aus der Quelle [Software, A
 
 Mapping Standardkontenrahmen zu Namespaces
 
-| Namespace | Key  | Value                                                                                                 | Resources                          |
-| --------- | ---- | ----------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| SKR04     | 0    | Anlagevermögen (Bestand: Aktiv)                                                                       |                                    |
+| Namespace | Key  | Value                                                                                                 | Resources                                                                                                                               |
+| --------- | ---- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| SKR04     | 0    | Anlagevermögen (Bestand: Aktiv)                                                                       |                                                                                                                                         |
 | SKR04     | 0135 | EDV-Software                                                                                          | Entgeltlich erworbene Konzessionen, gewerbliche Schutzrechte und ähnliche Rechte und Werte sowie Lizenzen an solchen Rechten und Werten |
-| SKR04     | 0144 | EDV-Software                                                                                          | Selbst geschaffene immaterielle Vermögensgegenstände |
-| SKR04     | 1    | Umlaufvermögen (Bestand: Aktiv)                                                                       |                                    |
-| SKR04     | 2    | Eigenkapitalkonten (Bestand: Passiv)                                                                  |                                    |
-| SKR04     | 3    | Fremdkapitalkonten (Bestand: Passiv)                                                                  |                                    |
-| SKR04     | 4    | Betriebliche Erträge (Erfolg: Ertrag)                                                                 |                                    |
-| SKR04     | 4825 | Aktivierte Eigenleistungen zur Erstellung von selbst geschaffenen immateriellen Vermögensgegenständen | Andere aktivierte Eigenleistungen  |
-| SKR04     | 5    | Betriebliche Aufwendungen (Erfolg: Aufwand)                                                           |                                    |
-| SKR04     | 6    | Betriebliche Aufwendungen (Erfolg: Aufwand)                                                           |                                    |
-| SKR04     | 6200 | Abschreibungen auf immaterielle Vermögensgegenstände                                                  | Abschreibungen auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen |
-| SKR04     | 6495 | Wartungskosten für Hard- und Software                                                                 | Sonstige betriebliche Aufwendungen |
-| SKR04     | 6835 | Mieten für Einrichtungen (bewegliche Wirtschaftsgüter)                                                | Cloud Ressourcen wie z.B. Compartment, Group, Policy, User, Network, Storage, Compute können hier verbucht werden. |
-| SKR04     | 6837 | Aufwendungen für die zeitlich befristete Überlassung von Rechten (Lizenzen, Konzessionen)             | Sonstige betriebliche Aufwendungen |
-| SKR04     | 7    | Weitere Erträge und Aufwendungen (Erfolg: Aufwand, Ertrag)                                            |                                    |
-| SKR04     | 9    | Vortrags- und statistische Konten (Bestand: Rechnungsabgrenzung usw.)                                 |                                    |
+| SKR04     | 0144 | EDV-Software                                                                                          | Selbst geschaffene immaterielle Vermögensgegenstände                                                                                    |
+| SKR04     | 1    | Umlaufvermögen (Bestand: Aktiv)                                                                       |                                                                                                                                         |
+| SKR04     | 2    | Eigenkapitalkonten (Bestand: Passiv)                                                                  |                                                                                                                                         |
+| SKR04     | 3    | Fremdkapitalkonten (Bestand: Passiv)                                                                  |                                                                                                                                         |
+| SKR04     | 4    | Betriebliche Erträge (Erfolg: Ertrag)                                                                 |                                                                                                                                         |
+| SKR04     | 4825 | Aktivierte Eigenleistungen zur Erstellung von selbst geschaffenen immateriellen Vermögensgegenständen | Andere aktivierte Eigenleistungen                                                                                                       |
+| SKR04     | 5    | Betriebliche Aufwendungen (Erfolg: Aufwand)                                                           |                                                                                                                                         |
+| SKR04     | 6    | Betriebliche Aufwendungen (Erfolg: Aufwand)                                                           |                                                                                                                                         |
+| SKR04     | 6200 | Abschreibungen auf immaterielle Vermögensgegenstände                                                  | Abschreibungen auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen                                                |
+| SKR04     | 6495 | Wartungskosten für Hard- und Software                                                                 | Sonstige betriebliche Aufwendungen                                                                                                      |
+| SKR04     | 6835 | Mieten für Einrichtungen (bewegliche Wirtschaftsgüter)                                                | Cloud Ressourcen wie z.B. Compartment, Group, Policy, User, Network, Storage, Compute können hier verbucht werden.                      |
+| SKR04     | 6837 | Aufwendungen für die zeitlich befristete Überlassung von Rechten (Lizenzen, Konzessionen)             | Sonstige betriebliche Aufwendungen                                                                                                      |
+| SKR04     | 7    | Weitere Erträge und Aufwendungen (Erfolg: Aufwand, Ertrag)                                            |                                                                                                                                         |
+| SKR04     | 9    | Vortrags- und statistische Konten (Bestand: Rechnungsabgrenzung usw.)                                 |                                                                                                                                         |
 
 Implementierungsbeispiel:
 
-```
+```bash
 resource "oci_identity_tag_namespace" "skr04_tag_namespace" {
 # Required
 #------------------------------------------------------------
@@ -287,27 +313,25 @@ This topic describes how you can unify billing across multiple tenancies by shar
 
 Two types of tenancies are involved when sharing a subscription in the Console:
 
-- The parent tenancy (the one that is associated with the primary funded subscription).
-- Child tenancies (those that are consuming from a subscription that is not their own).
-
+* The parent tenancy (the one that is associated with the primary funded subscription).
+* Child tenancies (those that are consuming from a subscription that is not their own).
 
 Notable benefits of sharing a subscription includes:
 
-- Sharing a single commitment helps to avoid cost overages and allows you to consolidate your billing.
-- Enabling multi-tenancy cost management. You can analyze, report, and monitor across all linked tenancies. The parent tenancy has the ability to analyze and report across each of your tenancies through Cost Analysis and Cost and usage reports, and you can receive alerts through Budgets.
-- Isolation of data. Customers with strict data isolation requirements can use a multi-tenancy strategy to continue restricting resources across their tenancies.
+* Sharing a single commitment helps to avoid cost overages and allows you to consolidate your billing.
+* Enabling multi-tenancy cost management. You can analyze, report, and monitor across all linked tenancies. The parent tenancy has the ability to analyze and report across each of your tenancies through Cost Analysis and Cost and usage reports, and you can receive alerts through Budgets.
+* Isolation of data. Customers with strict data isolation requirements can use a multi-tenancy strategy to continue restricting resources across their tenancies.
 
 The remainder of this topic provides an overview of how to share your subscription between tenancies, and provides best practices on how to isolate workloads, in order to help you determine if you should use a single-tenancy or multi-tenancy strategy. You can unify billing across multiple tenancies by sharing your subscription between tenancies.
 
 To use subscription sharing, the following policy statements are required:
 
-```
+```bash
 Allow group linkUsers to use organizations-family in tenancy
 Allow group linkAdmins to manage organizations-family in tenancy
 ```
 
 For more information, see [Unified Billing Overview][cost_doku_unified_billing].
-
 
 ### Invoices
 
@@ -315,50 +339,51 @@ You can view and download invoices for your Oracle Cloud Infrastructure usage.
 
 Oracle Order-to-Cash has launched a dedicated page [Customer Billing Support][cost_invoice] to support our customers in understanding the Oracle Cloud invoicing experience. When visiting [Customer Billing Support][cost_invoice], customers can access content targeting specific needs and easily submit billing inquiries. The web page content is as follows:
 
-- Billing Support: Email or call Oracle’s global Collections offices.
-- Videos: Brief animations detailing various aspects of the invoice process.
-  - Billing Basics: This journey through Oracle Cloud billing basics covers the events that trigger the invoicing process and when to expect a bill.
-  - Subscription Invoicing: A guide to billing for Oracle metered and non-metered subscriptions.
-  - Overage and Bursting: This video explains how to avoid unexpected charges for Oracle Cloud services.
-  - Dispute Process: In this guide through the Oracle dispute process, customers learn who to contact and how to resolve billing questions.
-- FAQ: Consult our frequently asked questions regarding Cloud invoicing.
-- Glossary: Basic terminology used for Cloud features and services.
+* Billing Support: Email or call Oracle’s global Collections offices.
+* Videos: Brief animations detailing various aspects of the invoice process.
+  * Billing Basics: This journey through Oracle Cloud billing basics covers the events that trigger the invoicing process and when to expect a bill.
+  * Subscription Invoicing: A guide to billing for Oracle metered and non-metered subscriptions.
+  * Overage and Bursting: This video explains how to avoid unexpected charges for Oracle Cloud services.
+  * Dispute Process: In this guide through the Oracle dispute process, customers learn who to contact and how to resolve billing questions.
+* FAQ: Consult our frequently asked questions regarding Cloud invoicing.
+* Glossary: Basic terminology used for Cloud features and services.
 
 For questions or any additional information, please contact [cloud_invoicing_us@oracle.com](mailto:cloud_invoicing_us@oracle.com) or see [Viewing Your Subscription Invoice][cost_doku_invoice].
-
 
 ### Payment Methods
 
 The Payment Method section of the Oracle Cloud Infrastructure Console allows you to easily manage how you pay for your Oracle Cloud Infrastructure usage. For more information, see [Changing Your Payment Method][cost_doku_payment].
 
-
 ## Manage Cloud cost effectively (more advanced)
 
 ### Optimization
 
-{% imgx assets/optimization.jpg 45% "Optimization" %}
-{% imgx assets/optimization_1.jpg 45% "Optimization" %}
+<!-- {% imgx assets/optimization.jpg 45% "Optimization" %} -->
+![Optimization](assets/optimization.jpg)
+<!-- {% imgx assets/optimization.1.jpg 45% "Optimization" %} -->
+![Optimization](assets/optimization.1.jpg)
 
 If you’re using any cloud, you might regularly ask yourself questions like, “Why is the bill so high this month?” or “What would it actually cost to move this application to the cloud?” If so, this blog is for you. Today, I aim to make you familiar with the practices you need to control and predict your cost without compromising your performance.
 
 Whether you’re part of the finance department in charge of controlling the budget, a business decision-maker evaluating a new project, or a DevOps engineer thinking of new functionality for your application, cloud cost management is mission-critical and can make or break your business. Accessing limitless possibilities is leading to cloud exuberance, and it’s time to tame the beast.
 
-- Tag everything from day 1
-- Sharing is not caring
-- Time is money
-- Choose performance responsibly
-- Focus your attention on the whales
-- Consolidate your databases
-- Listen to your advisor
-- Involve your stakeholders and automate
-- Adopt cloud native technologies and containers
-- Compare prices and total cost of ownership
+* Tag everything from day 1
+* Sharing is not caring
+* Time is money
+* Choose performance responsibly
+* Focus your attention on the whales
+* Consolidate your databases
+* Listen to your advisor
+* Involve your stakeholders and automate
+* Adopt cloud native technologies and containers
+* Compare prices and total cost of ownership
 
 You find more details to do this in [10 effective ways to save cost in the cloud][cost_optimization2].
 
 ### Extensibility
 
-{% imgx assets/extensibility.jpg 45% "Extensibility" %}
+<!-- {% imgx assets/extensibility.jpg 45% "Extensibility" %} -->
+![Extensibility](assets/extensibility.jpg)
 
 [Oracle Cloud Infrastructure Usage and Cost Reports to Autonomous Database Tool usage2adw][cost_usage2adw]
 
@@ -367,12 +392,12 @@ usage2adw is a tool which uses the Python SDK to extract the usage and cost repo
 It uses APEX for Visualization and generates Daily e-mail report.
 
 Main Features
-- Usage Current State
-- Usage Over Time
-- Cost Analysis
-- Cost Over Time
-- Rate Card for Used Products
 
+* Usage Current State
+* Usage Over Time
+* Cost Analysis
+* Cost Over Time
+* Rate Card for Used Products
 
 {% imgx assets/ociapex_screen_4.png 80% "Cost Report" "Example of a Cost Report" %}
 
@@ -384,21 +409,20 @@ Main Features
 
 Commercial principles enable enterprises to continuously leverage the optimal commercial frameworks of cloud service  provider, based on the changing usage profiles and deployment requirements, thereby de-risking unexpected cost overruns as well as maximizing the combined financial productivity of on-premise licenses, annual license support, and cloud subscription. The principles are the following:
 
-- Delink  data  and  network  linear  usage  from  cost
-- Avoid service deployment lock-in
-- Re-purpose on-premise spend to acquire future cloud capabilities
+* Delink  data  and  network  linear  usage  from  cost
+* Avoid service deployment lock-in
+* Re-purpose on-premise spend to acquire future cloud capabilities
 
-{% imgx assets/economics.jpg 80% "Modern Cloud Economics Enablers of Oracle Cloud Infrastructure (OCI)" %}
-
+<!-- {% imgx assets/economics.jpg 80% "Modern Cloud Economics Enablers of Oracle Cloud Infrastructure (OCI)" %} -->
+![Modern Cloud Economics Enablers of Oracle Cloud Infrastructure (OCI)](assets/economics.jpg)
 
 **OCI enablers for Commercial principles**
 
 OCI offers a range of commercial enablers to optimize rate, de-risk cost overruns and maximize financial productivity across the investments in Oracle on-premise licenses and cloud subscriptions. The key enablers are:
 
-- Best price performance guarantee
-- Avoid service deployment lock-in
-- Re-purpose on-premise spend to acquire future cloud capabilities
-
+* Best price performance guarantee
+* Avoid service deployment lock-in
+* Re-purpose on-premise spend to acquire future cloud capabilities
 
 <!--- Links -->
 [home]:       index

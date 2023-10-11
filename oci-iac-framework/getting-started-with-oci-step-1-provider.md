@@ -23,15 +23,16 @@ mrm: WWMK211125P00022
 xredirect: https://developer.oracle.com/tutorials/oci-iac-framework/getting-started-with-oci-step-1-provider/
 slug: getting-started-with-oci-step-1-provider
 ---
-{% imgx aligncenter assets/landing-zone.png 400 400 "OCLOUD landing zone" %}
+<!-- {% imgx aligncenter assets/landing-zone.png 400 400 "OCLOUD landing zone" %} -->
+![OCLOUD landing zone](assets/landing-zone.png)
 
-Introducing Oracle Cloud Infrastructure (OCI) for service delivery allows operators to represent physical and virtual infrastructure in the form of code. System administrators ensure server uptime and service levels, responding to infrastructure monitoring alerts and resolving incidents programmatically. Adopting ["Infrastructure as Code" (IaC)][tf_intro] helps operators to connect events and state changes with automated provisioning processes.  
+Introducing Oracle Cloud Infrastructure (OCI) for service delivery allows operators to represent physical and virtual infrastructure in the form of code. System administrators ensure server uptime and service levels, responding to infrastructure monitoring alerts and resolving incidents programmatically. Adopting ["Infrastructure as Code" (IaC)][tf_intro] helps operators to connect events and state changes with automated provisioning processes.
 
 While requesting a resource from a cloud provider is a matter of opening the console, providing input values, and launching the server, addressing functional and non-functional requirements of an IT operation during the launch process is more complex. Provisioning plans help to determine the correct framework, reflect the operational and management tools, and configure resources according to security and compliance regulations. In OCI, we rely on [Terraform][tf_main] to automate provisioning processes. The widely-adopted, open-source tool allows engineers to translate "declarative" syntax written in [JSON][tf_json] or [Hashicorp's Configuration Language (HCL)][tf_hcl] into API calls.
 
 ## Getting Started
 
-One of the key benefits of using Terraform is that it's orchestrator agnostic. When needed, the execution environment can be dynamically extended with [hypervisor-specific interfaces][tf_provider]:  
+One of the key benefits of using Terraform is that it's orchestrator agnostic. When needed, the execution environment can be dynamically extended with [hypervisor-specific interfaces][tf_provider]:
 
 - Terraform templates comprise the physical infrastructure, network functions and orchestrators for distributed systems.
 - Topology templates comprise configuration scripts that initiate service deployments upon the successful creation of a resource.
@@ -88,7 +89,7 @@ nano ~/project/hello.tf
 
 ### Hello World
 
-Terraform uses a configuration language called HashiCorp Configuration Language (HCL) for templates that characterize components of a topology. HCL is a declarative language and instructions are stored in blocks. The syntax of HCL looks as follows:  
+Terraform uses a configuration language called HashiCorp Configuration Language (HCL) for templates that characterize components of a topology. HCL is a declarative language and instructions are stored in blocks. The syntax of HCL looks as follows:
 
 ```terraform
 <BLOCK TYPE> "<BLOCK project>" {
@@ -96,11 +97,11 @@ Terraform uses a configuration language called HashiCorp Configuration Language 
 }
 ```
 
-Infrastructure components are defined adopting an input-output model. [Input parameter][Input] are passed to a build plan, resources definitions describe the provision process and [output parameters][Output] return the results.  
+Infrastructure components are defined adopting an input-output model. [Input parameter][Input] are passed to a build plan, resources definitions describe the provision process and [output parameters][Output] return the results.
 
 {% imgx aligncenter assets/iomodel.png "HCL Syntax" %}
 
-This principle can be explained using a simple "Hello World" example. First we define an input variable. The input block contains type constraints as arguments for interpretation. Simple [types][tf_types] are `string`, `number`, and `bool`, while complex types are `list` and `object`. The resource block remains empty for now, because we're not aiming to provision any resources. The output block returns the execution results. Referring to an output variable instructs Terraform to execute the referenced block, so the sequence inside the code isn't actually relevant.  
+This principle can be explained using a simple "Hello World" example. First we define an input variable. The input block contains type constraints as arguments for interpretation. Simple [types][tf_types] are `string`, `number`, and `bool`, while complex types are `list` and `object`. The resource block remains empty for now, because we're not aiming to provision any resources. The output block returns the execution results. Referring to an output variable instructs Terraform to execute the referenced block, so the sequence inside the code isn't actually relevant.
 
 ```terraform
 # Input
@@ -116,23 +117,23 @@ resource "null_resource" "nothing" {}
 output "greeting" { value = var.input }
 ```
 
-Since HCL scripts don't include a shebang, we need to call terraform explicitly. We store the file as `~/project/hello.tf` and run the terraform command. Before executing terraform, we need to initialize the working directory:  
+Since HCL scripts don't include a shebang, we need to call terraform explicitly. We store the file as `~/project/hello.tf` and run the terraform command. Before executing terraform, we need to initialize the working directory:
 
 ```console
 cd ~/project && terraform init
 ```
 
-The command allows for additional subcommands using the format:  
+The command allows for additional subcommands using the format:
 
->*terraform \<subcommand\> -options*  
+>*terraform \<subcommand\> -options*
 
-The `-auto-approve` option forces terraform to execute the command without further confirmation:  
+The `-auto-approve` option forces terraform to execute the command without further confirmation:
 
 ```console
 terraform apply -auto-approve
 ```
 
-The command only returns with an output of the variable:  
+The command only returns with an output of the variable:
 
 ```terraform
 greeting = Hello World
@@ -143,28 +144,28 @@ greeting = Hello World
 
 ## Provider Configuration
 
-In order to create resources in OCI, we need to configure terraform. We can do this by creating a basic configuration file:  
+In order to create resources in OCI, we need to configure terraform. We can do this by creating a basic configuration file:
 
 ```console
 rm ~/project/hello.tf && nano ~/project/config.tf
 
 ```
 
-The first block is the [provider block][tf_provider] used to load the latest service provider. A [service provider][oci_terraform] is a plugin for the provisioning API and translates [HCL code into API calls][oci_provider]. Since the API is continuously evolving, adding a provider block forces terraform to load the latest version before executing any scripts. In the cloud shell, an empty block is sufficient since all of the necessary arguments are stored as the default parameter.  
+The first block is the [provider block][tf_provider] used to load the latest service provider. A [service provider][oci_terraform] is a plugin for the provisioning API and translates [HCL code into API calls][oci_provider]. Since the API is continuously evolving, adding a provider block forces terraform to load the latest version before executing any scripts. In the cloud shell, an empty block is sufficient since all of the necessary arguments are stored as the default parameter.
 
 ```terraform
 # Setup the oci service provider
 provider "oci" { }
 ```
 
-Next, we instruct terraform to address a specific account, referring to the [Oracle Cloud Resource Identifier (OCID)][oci_tenancy]. We define the `tenancy_ocid` as an empty input parameter and retrieve the OCID from the command line.  
+Next, we instruct terraform to address a specific account, referring to the [Oracle Cloud Resource Identifier (OCID)][oci_tenancy]. We define the `tenancy_ocid` as an empty input parameter and retrieve the OCID from the command line.
 
 ```terraform
 # Input parameter to request the unique identifier for an account
 variable "tenancy_ocid" { }
 ```
 
-With that, the communication is established and we can use the cloud controller as data source. A [data block][tf_data] sends a request to the controller and returns [account specific information][tf_tenancy] in JSON format.  
+With that, the communication is established and we can use the cloud controller as data source. A [data block][tf_data] sends a request to the controller and returns [account specific information][tf_tenancy] in JSON format.
 
 ```terraform
 # Retrieve meta data for tenant
@@ -173,7 +174,7 @@ data "oci_identity_tenancy" "account" {
 }
 ```
 
-Here, we'll define an output block by setting the result as a parameter and echoing it to the console:  
+Here, we'll define an output block by setting the result as a parameter and echoing it to the console:
 
 ```terraform
 # Output tenancy details
@@ -182,13 +183,13 @@ output "tenancy" {
 }
 ```
 
-Now, we close the file and test the integration with the `plan` command.  Because we left the input variable for the tenancy ID empty, we need to refer to a environment setting. The unix command [printenv][linux_printenv] unveils the respective environment variable:  
+Now, we close the file and test the integration with the `plan` command.  Because we left the input variable for the tenancy ID empty, we need to refer to a environment setting. The unix command [printenv][linux_printenv] unveils the respective environment variable:
 
 ```console
 printenv | grep TENANCY
 ```
 
-With the `-var` argument, we provide the expected input and run terraform:  
+With the `-var` argument, we provide the expected input and run terraform:
 
 ```console
 cd ~/project && terraform init && terraform plan -var tenancy_ocid=$OCI_TENANCY
@@ -196,11 +197,11 @@ cd ~/project && terraform init && terraform plan -var tenancy_ocid=$OCI_TENANCY
 
 ### Home Region
 
-OCI is available in multiple regions, with every region representing one or more a physical data centers. Multi-data-center regions like FRA, PHX, IAD, and LHR are managed as a single resource pool with multiple availability domains (AD). All regions are managed through a single API, which makes global service roll-outs simple. We can target a specific region using the region argument inside a block. In the console, the active region is shown in the upper-right corner, and in the cloud shell the command prompt shows the active region.  
+OCI is available in multiple regions, with every region representing one or more a physical data centers. Multi-data-center regions like FRA, PHX, IAD, and LHR are managed as a single resource pool with multiple availability domains (AD). All regions are managed through a single API, which makes global service roll-outs simple. We can target a specific region using the region argument inside a block. In the console, the active region is shown in the upper-right corner, and in the cloud shell the command prompt shows the active region.
 
 ![Cloud Shell](https://docs.cloud.oracle.com/en-us/iaas/Content/Resources/Images/cloud-shell-region-location-prompt.png "OCI Console")
 
-Some resources like compartments are defined once and replicated into every region. These are referred to as global resources. Global resources should be created in the ["home" region][blog_home]. We use the *locals block* to define a function that determines the [home region][oci_homeregion] for a tenant:  
+Some resources like compartments are defined once and replicated into every region. These are referred to as global resources. Global resources should be created in the ["home" region][blog_home]. We use the *locals block* to define a function that determines the [home region][oci_homeregion] for a tenant:
 
 ```terraform
 # Create a region map
@@ -216,7 +217,7 @@ locals {
 }
 ```
 
-[Region identifiers][oci_identifier] in OCI are provided either in a long format that includes the AD (e.g., *eu-frankfurt-1*) or as a simple three-letter key (e.g., *FRA*.) Even though HCL is a templating language, [expressions][tf_expression] allow us to use [scripts][tf_script] as primitives. We use this functionality in a [local block][tf_locals] to construct the right input format:  
+[Region identifiers][oci_identifier] in OCI are provided either in a long format that includes the AD (e.g., *eu-frankfurt-1*) or as a simple three-letter key (e.g., *FRA*.) Even though HCL is a templating language, [expressions][tf_expression] allow us to use [scripts][tf_script] as primitives. We use this functionality in a [local block][tf_locals] to construct the right input format:
 
 ```terraform
 # Get the list of regions
@@ -227,13 +228,13 @@ The `oci_identity_tenancy` block in `setting.tf` delivers the home-region key th
 
 ## Terraform Workflow
 
-Executing a build plan is reflected in a sequence of terraform commands which validate block definitions and quantify and provision the required resources. The steps in the Terraform workflow are closely related to the lifecycle of resources on cloud platforms. As you recall from earlier, these steps are orchestrator-agnostic, meaning that the commands are valid for creating, updating, and destroying resources on any given orchestrator.  
+Executing a build plan is reflected in a sequence of terraform commands which validate block definitions and quantify and provision the required resources. The steps in the Terraform workflow are closely related to the lifecycle of resources on cloud platforms. As you recall from earlier, these steps are orchestrator-agnostic, meaning that the commands are valid for creating, updating, and destroying resources on any given orchestrator.
 
 {% imgx aligncenter assets/workflow.png "Initial Command Sequence" %}
 
 ### `validate`
 
-Before executing terraform commands, we validate the HCL and JSON syntax. `Terraform validate` is a parser that checks the syntax structure for obvious errors:  
+Before executing terraform commands, we validate the HCL and JSON syntax. `Terraform validate` is a parser that checks the syntax structure for obvious errors:
 
 ```console
 terraform validate
@@ -241,7 +242,7 @@ terraform validate
 
 ### `init`
 
-When the code is error free, we run the `init` command to instruct terraform to check and load the referenced service provider plug-ins from the [provider registry][tf_provider] and store the plugin in the `.terraform` sub directory. Third party service providers can be added by defining additional provider blocks:  
+When the code is error free, we run the `init` command to instruct terraform to check and load the referenced service provider plug-ins from the [provider registry][tf_provider] and store the plugin in the `.terraform` sub directory. Third party service providers can be added by defining additional provider blocks:
 
 ```console
 terraform init
@@ -249,7 +250,7 @@ terraform init
 
 ### `plan`
 
-After that, we run a `plan` command to check the list of resource changes before executing a deployment plan. The `plan` command indicates which resources will be created, updated, or deleted in order to adjust the current architecture to match the desired architecture. The `-out config.tfplan` extension instructs terraform to store the execution plan for a later `apply`:  
+After that, we run a `plan` command to check the list of resource changes before executing a deployment plan. The `plan` command indicates which resources will be created, updated, or deleted in order to adjust the current architecture to match the desired architecture. The `-out config.tfplan` extension instructs terraform to store the execution plan for a later `apply`:
 
 ```console
 terraform plan -var tenancy_ocid=$OCI_TENANCY -out config.tfplan
@@ -257,7 +258,7 @@ terraform plan -var tenancy_ocid=$OCI_TENANCY -out config.tfplan
 
 ### `apply`
 
-The `apply` command executes the script. We are not provisioning any resources yet and so use the `-auto-approve` flag to skip the explicit confirmation:  
+The `apply` command executes the script. We are not provisioning any resources yet and so use the `-auto-approve` flag to skip the explicit confirmation:
 
 ```console
 terraform apply "config.tfplan" -auto-approve
@@ -275,7 +276,7 @@ cat ~/training/terraform.tfstate
 
 This file captures terraform the results of every deployment process. State awareness sets Terraform apart from most configuration management systems used for cloud deployments, because it allows for "declarative" deployments. The admin only defines the desired architecture in the build plan and when Terrafrom is executed, the program automatically determines the difference between the as-is and to-be architecture, either deploying or destroying the required resources.
 
-**`Terraform.tfstate` file example:**  
+**`Terraform.tfstate` file example:**
 
 ```terraform
 # Terraform.tfstate file example
@@ -294,13 +295,13 @@ This file captures terraform the results of every deployment process. State awar
 }
 ```
 
-Terraform provides the `show` command for operators to review the current state. This command retrieves all information captured in the state file. Specifying the `-json` option transfers the data into a valid [json format][tf_json]:  
+Terraform provides the `show` command for operators to review the current state. This command retrieves all information captured in the state file. Specifying the `-json` option transfers the data into a valid [json format][tf_json]:
 
 ```console
 terraform show -json
 ```
 
-With a JSON parser like [jq][jq_site] we can filter infrastructure information for further use. In case of an error, the [json validator][json_valid] allows us to check the JSON structure and the [jq playground][jq_play] to develop the filter syntax before applying it:  
+With a JSON parser like [jq][jq_site] we can filter infrastructure information for further use. In case of an error, the [json validator][json_valid] allows us to check the JSON structure and the [jq playground][jq_play] to develop the filter syntax before applying it:
 
 ```console
 terraform show -json | jq .values.outputs.tenancy.value.home_region_key -r
@@ -310,25 +311,25 @@ This example shows how to use jq to filter the home region of your tenant from j
 
 ## Output
 
-With `terraform output` will retrieve the defined output parameter from the state file. Adding the name of a particular block, the response returns only the data of a specific block:  
+With `terraform output` will retrieve the defined output parameter from the state file. Adding the name of a particular block, the response returns only the data of a specific block:
 
 ```console
 terraform output home
 ```
 
-We can use this command to analyze an existing tenancy from the command line (i.e, resources can only be deployed in regions that have been activated by the account owner). One option is to leverage the [OCI command line interface][oci_cli] to retrieve a list of regions have already been activated:  
+We can use this command to analyze an existing tenancy from the command line (i.e, resources can only be deployed in regions that have been activated by the account owner). One option is to leverage the [OCI command line interface][oci_cli] to retrieve a list of regions have already been activated:
 
 ```console
 oci iam region-subscription list --query 'data[*]'
 ```
 
-Terraform allows operators to use the same API but provide a list of regions in [JSON][tf_json] format. We create a small module in a subdirectory. This modules creates a JSON output containing all regions that a tenancy has subscribed to:  
+Terraform allows operators to use the same API but provide a list of regions in [JSON][tf_json] format. We create a small module in a subdirectory. This modules creates a JSON output containing all regions that a tenancy has subscribed to:
 
 ```console
 mkdir ~/project/subscriptions && nano ~/project/subscriptions/region.tf
 ```
 
-The method `oci_identity_region_subscriptions` retrieves the list of activated regions form the service provider. With the output block we reformat the list into a list of provider arguments:  
+The method `oci_identity_region_subscriptions` retrieves the list of activated regions form the service provider. With the output block we reformat the list into a list of provider arguments:
 
 ```terraform
 variable "tenancy_ocid" { }
@@ -345,7 +346,7 @@ output "subscriptions" {
 data "oci_identity_region_subscriptions" "activated" { tenancy_id = var.tenancy_ocid }
 ```
 
-After an initial `apply`, we use the `terraform output -json` command and parse the list with [jq][ref_jq] to create a terraform input file. In this example, the list contains a set of regional providers. We then use a bash command to transfer the result into `~/project/provider.tf.json` file:  
+After an initial `apply`, we use the `terraform output -json` command and parse the list with [jq][ref_jq] to create a terraform input file. In this example, the list contains a set of regional providers. We then use a bash command to transfer the result into `~/project/provider.tf.json` file:
 
 ```console
 terraform output -json | jq '[{provider: {oci: .providers.value[]}}]' > p && mv ./p ../provider.tf.json

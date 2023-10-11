@@ -22,7 +22,8 @@ xredirect: https://developer.oracle.com/tutorials/oci-iac-framework/
 slug: index
 ---
 
-{% imgx aligncenter assets/landing-zone.png 400 400 "Landing Zone" "OCLOUD Landing Zone" %}
+<!-- {% imgx aligncenter assets/landing-zone.png 400 400 "Landing Zone" "OCLOUD Landing Zone" %} -->
+![OCLOUD Landing Zone](./assets/landing-zone.png)
 
 **Difficulty:** Expert
 
